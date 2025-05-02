@@ -37,7 +37,7 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
     Desde el directorio donde clonaste el repositorio, ejecuta el siguiente comando:
 
     ```bash
-    docker-compose up -d
+    docker compose up -d
     ```
 
     Esto descargará las imágenes de Docker necesarias (si no las tienes localmente) y iniciará los servicios en segundo plano (`-d`).
@@ -60,12 +60,19 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
 
     La primera vez que accedas a Owncloud, se debera ingresar con los datos del administrador (usuario y contraseña).
 
-5.  **Detén los contenedores:**
+5.  **Para mantener encendidos siempre los contenedores, utilizar el siguiente comando:**
+
+     ```bash
+    docker update --restart unless-stopped Owncloud_Server
+    docker update --restart unless-stopped Owncloud_Mariadb
+    docker update --restart unless-stopped Owncloud_Redis
+    ```
+6.  **Detén los contenedores:**
 
     Para detener los servicios de Owncloud, ejecuta el siguiente comando en el mismo directorio:
 
     ```bash
-    docker-compose down
+    docker compose down
     ```
 
     Esto detendrá y eliminará los contenedores, pero los volúmenes de datos persistirán por defecto.
