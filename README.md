@@ -69,7 +69,7 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
     docker update --restart unless-stopped Owncloud_Mariadb
     docker update --restart unless-stopped Owncloud_Redis
     ```
-6.  **Detén los contenedores:**
+6.  **Detén y elimina los contenedores:**
 
     Para detener los servicios de Owncloud, ejecuta el siguiente comando en el mismo directorio:
 
@@ -77,4 +77,4 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
     docker compose down
     ```
 
-    Esto detendrá y eliminará los contenedores, pero los volúmenes de datos persistirán por defecto.
+    Esto detendrá y eliminará los contenedores, pero los volúmenes de datos persistirán por defecto. Debido a lo cual deberá realizarse con precausión.
