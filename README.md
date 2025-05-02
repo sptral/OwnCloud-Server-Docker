@@ -52,8 +52,10 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
     Abre tu navegador y navega a:
 
     ```
-    http://localhost:8585
+    http://<localhost>:8585
     ```
+
+    **Nota:** Es necesario sustituir `<localhost>` por la ip que corresponde al equipo en el que se instalaron los contenedores.
 
 
 4.  **Configuración inicial de Owncloud:**
