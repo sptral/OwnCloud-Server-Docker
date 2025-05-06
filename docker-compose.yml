@@ -16,7 +16,7 @@ services:
       - redis
     environment:
       - OWNCLOUD_DOMAIN=<ip del servidor> # Coloca la IP de tu servidor
-      - OWNCLOUD_TRUSTED_DOMAINS=<ip del servidor>, # Coloca la IP de tu servidor
+      - OWNCLOUD_TRUSTED_DOMAINS=<ip del servidor> # Coloca la IP de tu servidor
       - OWNCLOUD_DB_TYPE=mysql
       - OWNCLOUD_DB_NAME=owncloud
       - OWNCLOUD_DB_USERNAME=admin # Preferentemente cambiar el nombre de usuario
