@@ -7,23 +7,23 @@ networks:
 services:
   owncloud:
     image: owncloud/server:10.15.2 # Utilice la ultima versión estable
-    container_name: Owncloud_Server
+    container_name: Owncloud-Server
     restart: always
     ports:
-      - "<localhost>:8585:8080" # Cambia <localhost> por la IP de tu servidor
+      - "0.0.0.0:8585:8080"
     depends_on:
       - mariadb
       - redis
     environment:
-      - OWNCLOUD_DOMAIN=<localhost> # Cambia <localhost> por la IP de tu servidor
-      - OWNCLOUD_TRUSTED_DOMAINS=<localhost> # Cambia <localhost> por la IP de tu servidor
+      - OWNCLOUD_DOMAIN=<ip del servidor> # Coloca la IP de tu servidor
+      - OWNCLOUD_TRUSTED_DOMAINS=<ip del servidor>, # Coloca la IP de tu servidor
       - OWNCLOUD_DB_TYPE=mysql
       - OWNCLOUD_DB_NAME=owncloud
       - OWNCLOUD_DB_USERNAME=admin # Preferentemente cambiar el nombre de usuario
-      - OWNCLOUD_DB_PASSWORD=passwd # Cambia la contraseña por una segura
+      - OWNCLOUD_DB_PASSWORD=Passwd # Cambia la contraseña por una segura
       - OWNCLOUD_DB_HOST=mariadb
       - OWNCLOUD_ADMIN_USERNAME=admin # Preferentemente cambiar el nombre de usuario
-      - OWNCLOUD_ADMIN_PASSWORD=passwd # Cambia la contraseña por una segura
+      - OWNCLOUD_ADMIN_PASSWORD=Passwd # Cambia la contraseña por una segura
       - OWNCLOUD_MYSQL_UTF8MB4=true
       - OWNCLOUD_REDIS_ENABLED=true
       - OWNCLOUD_REDIS_HOST=redis
@@ -39,12 +39,12 @@ services:
 
   mariadb:
     image: mariadb:lts-ubi # Utilice la última versión estable
-    container_name: Owncloud_Mariadb
+    container_name: Owncloud-Mariadb
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=passwd # Cambia la contraseña por una segura
+      - MYSQL_ROOT_PASSWORD=Passwd # Cambia la contraseña por una segura
       - MYSQL_USER=admin # Preferentemente cambiar el nombre de usuario
-      - MYSQL_PASSWORD=passwd # Cambia la contraseña por una segura
+      - MYSQL_PASSWORD=Passwd # Cambia la contraseña por una segura
       - MYSQL_DATABASE=owncloud
       - MARIADB_AUTO_UPGRADE=1
     command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
@@ -60,7 +60,7 @@ services:
 
   redis:
     image: redis:bookworm # Utilice la última versión estable
-    container_name: Owncloud_Redis
+    container_name: Owncloud-Redis
     restart: always
     command: ["--databases", "1"]
     healthcheck:
@@ -75,9 +75,9 @@ services:
 
 volumes:
   Owncloud_Server:
-    name: Owncloud_Server
+    name: Owncloud-Server
   Owncloud_Mariadb:
-    name: Owncloud_Mariadb
+    name: Owncloud-Mariadb
   Owncloud_Redis:
-    name: Owncloud_Redis
+    name: Owncloud-Redis
 
