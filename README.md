@@ -65,9 +65,9 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
 5.  **Para mantener encendidos siempre los contenedores, utilizar el siguiente comando:**
 
      ```bash
-    docker update --restart unless-stopped Owncloud_Server
-    docker update --restart unless-stopped Owncloud_Mariadb
-    docker update --restart unless-stopped Owncloud_Redis
+    docker update --restart unless-stopped Owncloud-Server
+    docker update --restart unless-stopped Owncloud-Mariadb
+    docker update --restart unless-stopped Owncloud-Redis
     ```
 6.  **Detén y elimina los contenedores:**
 
