@@ -1,0 +1,83 @@
+version: "3"
+
+networks:
+  Owncloud:
+    driver: bridge
+
+services:
+  owncloud:
+    image: owncloud/server:10.15.2 # Utilice la ultima versión estable
+    container_name: Owncloud-Server
+    restart: always
+    ports:
+      - "0.0.0.0:8585:8080"
+    depends_on:
+      - mariadb
+      - redis
+    environment:
+      - OWNCLOUD_DOMAIN=<ip del servidor> # Coloca la IP de tu servidor
+      - OWNCLOUD_TRUSTED_DOMAINS=<ip del servidor> # Coloca la IP de tu servidor
+      - OWNCLOUD_DB_TYPE=mysql
+      - OWNCLOUD_DB_NAME=owncloud
+      - OWNCLOUD_DB_USERNAME=admin # Preferentemente cambiar el nombre de usuario
+      - OWNCLOUD_DB_PASSWORD=Passwd # Cambia la contraseña por una segura
+      - OWNCLOUD_DB_HOST=mariadb
+      - OWNCLOUD_ADMIN_USERNAME=admin # Preferentemente cambiar el nombre de usuario
+      - OWNCLOUD_ADMIN_PASSWORD=Passwd # Cambia la contraseña por una segura
+      - OWNCLOUD_MYSQL_UTF8MB4=true
+      - OWNCLOUD_REDIS_ENABLED=true
+      - OWNCLOUD_REDIS_HOST=redis
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - Owncloud_Server:/mnt/data
+    networks:
+      - Owncloud
+
+  mariadb:
+    image: mariadb:lts-ubi # Utilice la última versión estable
+    container_name: Owncloud-Mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Passwd # Cambia la contraseña por una segura
+      - MYSQL_USER=admin # Preferentemente cambiar el nombre de usuario
+      - MYSQL_PASSWORD=Passwd # Cambia la contraseña por una segura
+      - MYSQL_DATABASE=owncloud
+      - MARIADB_AUTO_UPGRADE=1
+    command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=Passwd"] # Cambiar la contraseña por una segura
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - Owncloud_Mariadb:/var/lib/mysql
+    networks:
+      - Owncloud
+
+  redis:
+    image: redis:bookworm # Utilice la última versión estable
+    container_name: Owncloud-Redis
+    restart: always
+    command: ["--databases", "1"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - Owncloud_Redis:/data
+    networks:
+      - Owncloud
+
+volumes:
+  Owncloud_Server:
+    name: Owncloud-Server
+  Owncloud_Mariadb:
+    name: Owncloud-Mariadb
+  Owncloud_Redis:
+    name: Owncloud-Redis
+
